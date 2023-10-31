@@ -1,0 +1,32 @@
+el Objetivo de este paso es:
+1. realizar una escucha con el formulario.
+2. Conectar la interfaz del usuario con la peticion a la api que hicimos anteriormente.
+
+
+1.para esto en principio usamos las directivas de vue:
+estas son muy simples y completas con 2 palabras logramos esto: V-ON al formulario.
+
+<form class="form" v-on:submit.prevent="peticionAPI">
+
+a. agregamos que queremos una escucha de tipo submit
+v-on:submit
+
+b. quitamos el comportamiento por defecto
+v-on:submit.prevent = "peticionAPI"
+
+2. conectar el input con el metodo conectar Api: v-model.
+
+. aqui entra el concepto de reactividad: cuando cambie lo que definamos en la declaracion de la variable "buscar" en este caso, cambiara automaticamente en la interfaz.
+
+ v-model: es especial para crear formularios la capacidad de captar el dato del input y poder enviarlo al codigo
+ ref(): con esto indicamos que lo que este envuelto, el valor, sea reactivo, que si cambia en el codigo cambia en la interfaz
+
+ pasos:
+
+ 1. agregamos el v-model con el nombre de la variable o donde se guarde el dato al input.
+   <input v-model="busqueda" type="text" placeholder="ingrese el github">
+ 2. le agregamos la referencia al espacio donde se guarda o modifica para que este sea reactivo.
+  let busqueda = ref('') 
+ 3. como la referencia devuelve un objeto, para usar su valor agregamos el .value.
+  let busqueda = ref('').value
+

@@ -1,0 +1,40 @@
+. aqui vamos a empezar a mostrar por pantalla los datos del usuario. con las directivas.
+
+v-if / v-else: mostra un contenido por pantalla segun una condicion.
+
+1. VAMOS A INTENTAR MOSTRAR EL DIV RESULTADO, SI ENCUENTRA O NO RESULTADO
+
+. Para esto usamos un condicional en el v-if en resutaldo:
+. la condicion sera:
+. a. inicializamos una variable en el scop global result = ref(false). como falsa para que no aparezca el div al principio.
+
+. b. dentro de la funcion de la busqueda de la api, vamos a modificar una variable llamada result: true, esto quiere decir que cuando se haga efectivamente la peticion a la api, el valor de result cambiara a true y se mostrara el div en la interfaz. 
+. c. recordar que como usamos el ref para que sea reactivo esto, devuelve un objeto, para que cambie su valor hay que entrar en: result.value = true
+
+
+2. AHORA TENEMOS QUE HACER CONDICIONAL LA MUESTRA DEL DIV ERROR:
+
+a. primero: creo una variable globla mostrarError = ref(false).
+b. segundo: agregar una variable para mostrar el error en el catch y poner su valor en true.
+
+2.b ARREGLAR: CUANDO NUESTRA BUSQUEDA ES FALLIDA NOS REENDERIZA IGUALEMENTE NUESTRA INFO ESTATICA QUE CREAMOS.
+para eso aprovechamos ese mostrarError que creamos y se lo agregamos a la condicion de resultado:
+
+ v-if="result && !mostrarError">
+ si la busqueda es exitosa:
+
+ ..  result = true -> porque no hay error
+ ..  mostrarError = es false -> porque no hay error
+
+ yo quiero que se muestre en este caso y necesito que las 2 sean true, entonces uso el magico !.
+ ..  result = true -> porque no hay error
+ ..  !mostrarError = es false -> pero con el !, se convierte en true
+ y se reenderiza la imagen
+
+
+ se va a reenderiza
+
+
+3. LIMPIAR LA CAJA DE busqueda
+en el try, catch agregamos el finally{busqueda= null}
+para que cuando termine de hacer la busqueda quede vacia la caja

@@ -1,0 +1,30 @@
+
+const API = "https://api.github.com/users/";
+
+// LA MEJOR PETICION A LA API PASO A PASO:
+// PASO 1 = PETICION.
+// 1. si es una peticion = es asyncrona.
+// 2. si es asincrona usamos try y catch.
+// 3. la peticion la resumimos en una linea guardando el resultado en una variable response.
+// 4. manejamos error con if + throw ${response.status} = ${response.status.text}
+
+
+
+CODIGO:
+async function peticionFetch() {
+  try {
+    const response = await fetch(API + "jonabenitez")
+    if (!response.ok) {
+      throw new Error(`Error en la solicutud: ${response.status} - ${response.statusText}`)
+    }
+
+    const data = await response.json();
+    console.log(data)
+
+
+  } catch (error) {
+
+    console.log(error)
+  }
+}
+peticionFetch()
