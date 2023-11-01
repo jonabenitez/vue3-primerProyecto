@@ -1,0 +1,83 @@
+1. CREAMOS LA ESTRUCTURA PARA GUARDAR ESTOS DATOS DE FAVORITOS: new MAP
+
+sintaxis: const favorites = ref(new Map())
+
+. porque ref: porque se hace una referencia a que esto va a ser reactivo, va a sufrir cambios.
+
+. porque un map?
+. porque map tiene una propiedad de busqueda que nos evita realizar un bucle extenso y que consume muchos recursos.
+. nos permite guardar algo dentro del mapa, con una clave especifica y comprobar si existe por esta clave.
+. los mapas garantizan que no haya elementos duplicados.
+
+
+// COMO EMPEZAR A CREAR NUESTROS COMPONENTES //
+
+LOGICA: PENSAR QUE VAMOS HACER :
+
+vamos a agregar ID a una estructura de favoritos,
+en base si esta ese ID en favoritos o no, vamos a reenderizar 1 de las 2 caras del boton.
+
+que necesitamos:
+1. lugar donde se guarden los datos, una estructura: map.
+2. una funcion que verifique si ese ID esta en favoritos o no: isfavorite(ID)
+
+    IMPORTANTE: entendemos que esta funcion va a recibir un ID en algun momento, por esto le agregamos un parametro llamado ID.
+     . EN el paso 3 es donde recibe el id como parametro, cuando se presiona en el boton, sea agregar o eliminar, se usa la funcion isfavorite para verificar si ese ID, esta dentro de favoritos.
+
+3. un boton  de 2 caras: 
+
+--> si esta ese ID => renderice el boton que elimina el elemento del Map.
+--> sino esta => rederice la cara del boton que permite agregarlo al Map.
+
+este boton va a recibir la funcion que verifica si esta el id en favorito
+
+1. const favorites = ref (Map()).
+
+2. function isfavorite (ID) {
+    favorites.value.has(ID)
+}
+
+3. funcion togleButton () {
+
+    let usuarioID = result.value.id
+
+    if (isfavorite(usuarioID)) {
+        favorites.value.delete(usuarioID)
+    }
+    else {favorite.value.set(userID, result)}
+
+}
+
+4. ahora de reenderizar la cara le moneda en el boton con un TERNARIO
+
+                        {{ isFavorite(result.id) ? 'Remove Favorite' : 'Add Favorite' }}
+
+usamos el es favorito para ver si el id del usuario actual se encuentra en la lista de favoritos.
+
+// LOGICA COMUN:
+
+esto es como un boliche y su entrada
+el boliche quiere que ingrese somo 1 de cada tipo de persona favoritas.
+
+entonces lo pensamos como que el boliche es la estructura, el Map.
+
+este va a necesitar:
+.alguien en la puerta que le pida el nombre o el ID a la gente
+. una herramienta que tenga esta persona para poder verificar si ese nombre ya esta en el boliche o no.
+. y este alguien, sera un boton, que va a tener la funcion de hacer 2 acciones
+1. si la persona ya esta darle la opcion de salir, de eliminar.
+2. si la persona no esta, poder agregarla.
+
+
+
+
+
+
+
+
+herramientas utiles del map:
+map.set('key', valor) = agrega una clave y un valor, que pueden ser de cualquier tipo.
+
+map.has('key') = comprueba si existe dentro de ese map la key, si existe, devuelve true.
+
+map.get ('key) = me devuelve lo que hay dentro.

@@ -1,27 +1,39 @@
 <template>
+    <!-- FORMULARIO -->
     <form class="form" v-on:submit.prevent="goSearch">
+        <h1>Search Users GitHub</h1>
         <input v-model="busqueda" type="text" placeholder="ingrese el github">
         <p>{{ busqueda }}</p>
         <input class="inputButton" type="submit" value="submit">
-
+        <!-- ERROR -->
         <div class="error" v-if="mostrarError">
-            <h3>Error</h3>
+            <h3>{{ mostrarError }}</h3>
         </div>
     </form>
+
+    <!--RESULTADO -->
     <div class="container">
         <div class="resultado" v-if="result && !mostrarError">
-            <h2 class="resultado_name">jonatan</h2>
+            <h2 class="resultado_name">{{ result.login }}</h2>
             <div class="imgContainer">
-                <img src="" alt="">
+                <img class="imagen" v-bind:src="result.avatar_url" v-bind:alt="result.name">
             </div>
-            <p class="biografia">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut minus sit, ea esse, sapiente possimus nam ipsa
-                quaerat magni, facilis commodi ipsum maxime? Quasi dolorum culpa quae quisquam repudiandae dolorem.
-                <a href="">link de github</a>
-            </p>
+            <div class="biografia">
+                <h1>id: {{ result.id }}</h1>
+                <h1>followers: <span> {{ result.followers }}</span></h1>
+                <p> {{ result.bio }}</p>
+
+                <div class="containerFav">
+                    <a v-bind:href="result.html_url" target="_blank">{{ result.html_url }}</a>
+                    <button v-on:click="manejadoraBoton" class="buttonFav">
+                        {{ verificadora(result.id) ? 'remove' : 'add'   }}
+                    </button>
+                </div>
+
+            </div>
         </div>
-        <p v-else> waiting for search...</p>
     </div>
+    <p v-if="!result" class="waiting"> waiting for search...</p>
 </template>
 
 
@@ -32,6 +44,7 @@ import { ref } from 'vue';
 let busqueda = ref('').value
 let result = ref(false)
 let mostrarError = ref(false)
+let favoritos = ref(new Map())
 
 
 async function goSearch() {
@@ -41,28 +54,51 @@ async function goSearch() {
             throw Error(`surgio un error de tipo ${response.status} - ${response.statusText}`);
         }
         const data = await response.json()
-        console.log(data)
-        result.value = true
+        result.value = data
+        console.log(result.value)
         mostrarError.value = false
+
     } catch (error) {
         console.log(error)
-        mostrarError.value = true
+        mostrarError.value = error
     } finally {
-        busqueda = null;
+        busqueda = '';
     }
 }
+
+
+
+
+// funcion verificadora:
+function verificadora (ingresoID)  {
+    return favoritos.value.has(ingresoID)
+}
+//boton toggle  
+let manejadoraBoton =() =>{
+    let usuarioID = result.value.id // pedimos el id al usuario ingresado.
+    //verificamos si ese id se encuentra ya en la lista de favoritos
+    if (verificadora(usuarioID)) {
+        // si esta.. 
+        favoritos.value.delete(usuarioID)
+    }else{
+        // pero sino esta, lo invitamos
+        favoritos.value.set(usuarioID, result.value)
+        console.log(usuarioID)
+    }
+
+
+}
+
+
+
+
+
+
 
 </script>
 
 
 <style scoped>
-.container {
-    display: flex;
-    flex-direction: columns;
-    align-items: center;
-    justify-content: center;
-}
-
 .form {
     padding: 1rem;
     display: flex;
@@ -90,13 +126,65 @@ input {
     margin-top: 1rem;
 }
 
+.imgContainer {
+    width: 8rem;
+    height: 8rem;
+    margin: 0.5rem;
+}
+
+.imagen {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
 .resultado {
     display: flex;
     border: solid white 1px;
     padding: 1rem;
+    width: 25rem;
+    max-width: 30rem;
     flex-direction: column;
     align-items: center;
     align-content: center;
+}
+
+.resultado_name {
+    text-transform: capitalize;
+    font-weight: 500;
+
+}
+
+.biografia>h1 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+.waiting {
+    text-align: center;
+}
+
+.containerFav {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 2rem;
+}
+
+
+.buttonFav {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border: none;
+    height: 2rem;
+    font-size: 0.8rem;
+    background-color: rgb(23, 82, 1);
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.buttonFav:hover {
+    cursor: pointer;
 
 }
 </style>

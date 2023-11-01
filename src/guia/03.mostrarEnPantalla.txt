@@ -38,3 +38,38 @@ para eso aprovechamos ese mostrarError que creamos y se lo agregamos a la condic
 3. LIMPIAR LA CAJA DE busqueda
 en el try, catch agregamos el finally{busqueda= null}
 para que cuando termine de hacer la busqueda quede vacia la caja
+
+
+4. HACER DINAMICO EL CUADRO DE RESULTADO
+por ahora siempre me muestr a mi como resultado ya que no esta mostrando lo que arroja la api, esta mostrando lo estatico.
+
+1. esta info se encuentra en el objeto que nos trae la api:
+
+. name = 'string'
+. avatar_url = 'url de la imagen'
+. blog = url de busqueda.
+
+como interpolar esos valores en la aplicacion: SINTAXIS DE PLANTILLA o 'BIGOTE'
+
+interpolar: agarrar estos datos arrojados y ponerlo en otro.
+
+1. interpolacion de texto en el dom = {{bigote}}
+2. atributos que van a evaluar explreciones estaticas y volverlas dinamicas = v-bind
+
+
+PASO 1:  {{bigote}}
+INTERPOLAR TEXTO:
+como hasta hicimos que result solo guarde un valor true para hacer que aparezca o no el div resultado ahora lo vamos a cambiar para que ingrese la data a este mismo.
+ result.value = true ---> result.value: data -> cuando la busqueda sea efectiva traeme los datos
+
+b. lo reflejamos en la interfaz:
+            <h2 class="resultado_name">{{ result.login }}</h2>
+    entramos a resultados y buscamos el login en este caso porque name esta null.
+
+PASO 2: interpolar imagen x URL: V-BLIND
+
+esto convierte el atributo a dinamico, al src lo convertimos en dinamico
+
+
+
+
