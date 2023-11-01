@@ -1,0 +1,83 @@
+BUSCAMOS REENDERIZAR, MOSTRAR LOS FAVORITOS:
+
+queremos reenderizar la estructura del div favoritos, por cada uno que yo haya guardado --> buqle.
+
+<div class="favoritos">
+            <a href="">
+                <img src="" alt="">  ===> ESTO ES LO QUE QUIERO REENDERIZAR POR CADA FAVORITO
+            </a>
+        </div>
+
+hacer un buqle dentro del dom: v-for.
+sintaxis: v-for = 'Cada elemento que quiero traer'  in  'en donde buscarlo' 
+permite recorrer cualquier estructura que pueda ser recorrida.
+
+
+ESTO ES LO QUE QUIERO REENDERIZAR POR CADA FAVORITO
+
+<div class="favoritos">
+            <a href="">
+                <img src="" alt="">  
+            </a>
+        </div>
+
+// PASOS PARA APLICAR //
+la estructura que tenemos para recorrer es el boliche, el mapa.
+
+1. DENTRO DEL DIV VAMOS A AGREGAR EL FOR.   
+
+
+2. VAMOS A DECIRLE QUE QUEREMOS TRAER LOS FAVORITO IN FAVORITOS
+3. Y VAMOS A BUSCAR LO QUE QUEREMOS RENDERIZAR DE ESOS FAVORITOS, LAS IMAGENES, TITULOS,estructura
+
+        <div v-for="favorito in favoritos">
+            <div class=" imgContainerFav">
+                <img class="imagen" v-bind:src="favorito.avatar_url" alt="">
+            </div>
+        </div>
+
+3.A TODAVIA NO LO RENDERIZA, PORQUE?
+
+esto se debe a la estrucura del map.
+ya que nosotros estamos usando el mapa para recorrer:
+
+ej: MAPA FAVORITOS:
+   { id:5401838 => {name:jona , avatar_url:Imagen}}
+
+si nosotros lo recorremos como arriba viene todo el objeto completo en un array.
+
+    [ 'id:5401838' , {name:jona , avatar_url:Imagen}]
+
+y yo solo necesito lo que tiene como valor para eso usamos DESECTRUCTURACION.
+
+//        <div v-for="[ , favorito] in favoritos">           //
+
+aca estamos diciendo, que con la key no haga nada, pero con el valor, definimelo como favorito.
+y ahora favorito = {name, avatar_url}
+
+
+
+
+////// AHORA QUEDA PASARLO A UNA PROPIEDAD COMPUTADA //
+COMO SABEMOS ESTE ES EL PRIMER PASO, UNA VEZ QUE FUNCIONA TRATAMOS DE TRASPASAR TODO A PROPIEDADES COMPUTADAS.
+
+para esto:
+1.para no recorrer el mapa de esta forma. donde tiene una parte de logica que tiene que buscar los valores de cada uno dentro del body, la solucion es:
+
+, crear una nueva estructura que contenga los valores de favoritos sin las key y asi recorrerlo sin hacer tanto maneje.
+
+
+let todoslosfavoritos = computed((=>){
+Array.from(favoritos.value.values())
+})
+
+
+con la propiedad values(), es exclusiva del Map y los objetos, nos trae todos los valores.
+y array.from () va a crear un array a partir de un objeto
+por lo tanto aplicamos este array from, a los valores de favoritos.
+
+ahora es un array que contiene los valores de favoritos donde se encuentran el avatar_url y todo lo que necesitamos
+
+2. por ultimo lo recorremos dentro del body de manera mas sencilla con v-for:
+<div v-for="favorito in todoslosfavoritos">  
+

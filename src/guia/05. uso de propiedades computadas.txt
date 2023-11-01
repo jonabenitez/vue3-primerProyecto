@@ -1,0 +1,17 @@
+las propiedades computadas:
+
+es el lugar donde vamos a guardar la logica de nuestra app, las pequenas porciones logicas como comparaciones o condiciones, las guardamos aqui.
+
+esto lo podemos hacer con la verificacion que se hace en el operador ternario.
+
+en esta linea se esta usando la funcion verificadora, que capta el id actual del usuario y lo busca en favoritos.
+     {{ verificadora(result.id) ? 'remove' : 'add'   }}
+
+aqui creamos esto por fuera:
+
+     const isUsuarioFavoritos = computed (()=>{
+        return favoritos.value.has(result.value.id)
+     })
+
+isUsuarioFavoritos: la definimos como una propiedad computada que SIEMPRE retorna algo.
+en este caso va a retornar la busqueda de este ID que ingresa del usuario en cuestion, y lo va a buscar en los favoritos

@@ -26,21 +26,29 @@
                 <div class="containerFav">
                     <a v-bind:href="result.html_url" target="_blank">{{ result.html_url }}</a>
                     <button v-on:click="manejadoraBoton" class="buttonFav">
-                        {{ verificadora(result.id) ? 'remove' : 'add'   }}
+                        {{ isUsuarioFavoritos ? 'remove' : 'add' }}
                     </button>
                 </div>
-
             </div>
         </div>
     </div>
     <p v-if="!result" class="waiting"> waiting for search...</p>
+    <!-- FAVORITOS -->
+    <div class="favoritos">
+        <div v-for="favorito in todosLosFavoritos">
+            <div class=" imgContainerFav">
+                <img class="imagen" v-bind:src="favorito.avatar_url" alt="">
+            </div>
+        </div>
+    </div>
 </template>
 
 
 <script setup>
+
 const API = "https://api.github.com/users/";
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 let busqueda = ref('').value
 let result = ref(false)
 let mostrarError = ref(false)
@@ -70,27 +78,34 @@ async function goSearch() {
 
 
 // funcion verificadora:
-function verificadora (ingresoID)  {
+function verificadora(ingresoID) {
     return favoritos.value.has(ingresoID)
 }
 //boton toggle  
-let manejadoraBoton =() =>{
+let manejadoraBoton = () => {
     let usuarioID = result.value.id // pedimos el id al usuario ingresado.
     //verificamos si ese id se encuentra ya en la lista de favoritos
     if (verificadora(usuarioID)) {
         // si esta.. 
         favoritos.value.delete(usuarioID)
-    }else{
+    } else {
         // pero sino esta, lo invitamos
         favoritos.value.set(usuarioID, result.value)
-        console.log(usuarioID)
+        console.log(favoritos.value)
     }
 
 
 }
 
 
+// unidad computada
+let isUsuarioFavoritos = computed(() => {
+    return favoritos.value.has(result.value.id)
+})
 
+let todosLosFavoritos = computed(()=>{
+    return Array.from (favoritos.value.values())
+})
 
 
 
@@ -185,6 +200,18 @@ input {
 
 .buttonFav:hover {
     cursor: pointer;
+}
 
+.favoritos {
+    display: flex;
+
+}
+
+.imgContainerFav {
+    display: flex;
+    flex-direction: row;
+    width: 8rem;
+    height: 8rem;
+    margin: 0.5rem;
 }
 </style>
