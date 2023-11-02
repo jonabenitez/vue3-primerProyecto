@@ -1,0 +1,30 @@
+LocalStorage:
+
+si queremos que los datos de esto persistan la manera mas sensilla es usar la memoria del navegador, LocalStorage.
+
+
+comandos:
+                        key      valor
+localStorage.setItem("miGato", "Juan");
+localStorage.removeItem("miGato", "Juan");
+localStorage.getItem("miGato", "Juan");
+localStorage.clear()
+
+con la key es con lo que vamos a recuperar todos los datos.
+
+. por naturaleza solo podemos guardar string, pero lo solucionamos:
+transformando los datos a string JSON.stringify()
+
+
+como usarlo.
+
+1. definimos al localStorage y ponerle el nombre con el valor.
+
+    window.localStorage.setItem('favoritos', JSON.stringify(todoslosfavoritos.value))// el nombre o la key y  que vamos a recuperar los valores.
+    
+2. llamamos al localStorage en los lugares donde se inteactue con favoritos.
+ a. cuando anado el favorito
+ b. cuando elimino el favorito
+
+
+

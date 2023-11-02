@@ -14,4 +14,5 @@ aqui creamos esto por fuera:
      })
 
 isUsuarioFavoritos: la definimos como una propiedad computada que SIEMPRE retorna algo.
-en este caso va a retornar la busqueda de este ID que ingresa del usuario en cuestion, y lo va a buscar en los favoritos
+en este caso va a retornar la busqueda de este ID que ingresa del usuario en cuestion, y lo va a buscar en los favoritos,
+si lo encuentra retorna true, sino lo encuentra retornara false

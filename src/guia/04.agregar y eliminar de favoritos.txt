@@ -14,7 +14,7 @@ sintaxis: const favorites = ref(new Map())
 
 LOGICA: PENSAR QUE VAMOS HACER :
 
-vamos a agregar ID a una estructura de favoritos,
+vamos a agregar ID de result a una estructura de favoritos,
 en base si esta ese ID en favoritos o no, vamos a reenderizar 1 de las 2 caras del boton.
 
 que necesitamos:

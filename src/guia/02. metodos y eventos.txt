@@ -14,9 +14,9 @@ v-on:submit
 b. quitamos el comportamiento por defecto
 v-on:submit.prevent = "peticionAPI"
 
-2. hacer reactivo el input Api: v-model. + ref()  
+2. hacer reactivo el input usando: v-model. + ref()  
 
-. aqui entra el concepto de reactividad: cuando cambie lo que definamos en la declaracion de la variable "buscar" en este caso, cambiara automaticamente en la interfaz.
+. aqui entra el concepto de reactividad: cuando cambie lo que definamos en la declaracion de la variable "busqueda" en este caso, cambiara automaticamente en la interfaz.
 
  v-model: es especial para crear formularios la capacidad de captar el dato del input y poder enviarlo al codigo
  ref(): con esto indicamos que lo que este envuelto, el valor, sea reactivo, que si cambia en el codigo cambia en la interfaz

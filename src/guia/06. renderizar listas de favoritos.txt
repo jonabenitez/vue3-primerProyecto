@@ -13,19 +13,11 @@ sintaxis: v-for = 'Cada elemento que quiero traer'  in  'en donde buscarlo'
 permite recorrer cualquier estructura que pueda ser recorrida.
 
 
-ESTO ES LO QUE QUIERO REENDERIZAR POR CADA FAVORITO
-
-<div class="favoritos">
-            <a href="">
-                <img src="" alt="">  
-            </a>
-        </div>
 
 // PASOS PARA APLICAR //
 la estructura que tenemos para recorrer es el boliche, el mapa.
 
 1. DENTRO DEL DIV VAMOS A AGREGAR EL FOR.   
-
 
 2. VAMOS A DECIRLE QUE QUEREMOS TRAER LOS FAVORITO IN FAVORITOS
 3. Y VAMOS A BUSCAR LO QUE QUEREMOS RENDERIZAR DE ESOS FAVORITOS, LAS IMAGENES, TITULOS,estructura

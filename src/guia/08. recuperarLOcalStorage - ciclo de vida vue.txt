@@ -1,0 +1,53 @@
+// esto se trata de poder recuperar los datos del LocalStorage.
+porque en el LocalStorage queda pero no se nos muestra en la interfaz.
+
+// la logica es:
+tan pronto como se cree esta instancia (se agrege a favoritos), consulte en el LocalStorage y guarde este favorito.
+
+esto lo conseguimos con los ciclos de vida de vue:
+. las importantes --> created() = este se ejecuta antes de mounted, sirve para cuando necesitamos hacer algo por fuera del dom (LocalStore), cosas que todavia no esta en el dom.
+                  --> mounted() = es cuando necesito ACCEDER a elementos del dom para manipularlos, leerlos, esto ya estan montados
+
+// como usarla: 
+como estamos usando el <setup> en el script.
+no es necesario utilizar el metodo created, todo lo que necesitemos hacer antes de que se monte lo hacemos sin ninguna especificacion.
+
+1. guardamos lo que traemos del LocalStorage, en una variable
+
+let LocalStorageFavoritos = window.LocalStorage.getItem ('fovoritos')
+
+2. cambirlo de al formato original sino no vamos a entender q nos trae:
+antes lo parseamos a string con JsonStringify
+ahora lo pasamos a su formato original con JSON.parse 
+
+let LocalStorageFavoritos = JSON.parse (window.LocalStorage.getItem ('fovoritos')) ---> devuelve -> [array]
+que hacemos con el array ahora
+
+3. replicamos la estructura del Map favoritos y recorremos este array para insertarlo en esta nueva estructura.
+
+porque?
+porque lo que deberiamos hacer es guardar este array en favoritos, pero no podemos hacer eso, por lo tanto replicamos el boliche map favorites:
+
+
+ACA HAY 2 SOLUCIONES POSIBLES CON 2 ENFOQUES DISTINTOS.
+
+
+1. SI PODEMOS REDEFINIR LA ESTRUCTURA DONDE VAMOS A GUARDAR ESTOS DATOS, FAVORITOS EN ESTE CASO:
+if (localStorageFavoritos && localStorageFavoritos.length) {
+    favoritos.value = new Map(
+        localStorageFavoritos.map(favorito => [favorito.id, favorito])
+    );
+}
+
+2. SINO PODEMOS REDEFINIRLA: SE CREA UNA VARIABLE QUE TOMA COMO REFERENCIA AL FAVORITOS INICIAL
+
+if (localStorageFavoritos && localStorageFavoritos.length) {
+    // hacemos referencia a favoritos, como favoritos esta con el ref() debemos entrar al value para trabajar con el.
+    const currentFavoritos = favoritos.value;
+    // recorremos el localstorage para definir como van a ser los favoritos que entren al current favoritos, iguales a los que entraban antes desde la interfaz y no desde el local storage como ahroa
+    localStorageFavoritos.map(favorito => {
+        currentFavoritos.set(favorito.id, favorito);
+    });
+    // hacemos referencia al nuevo valor de favoritos al favorito original
+    favoritos.value = currentFavoritos;
+}

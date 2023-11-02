@@ -45,16 +45,17 @@
 
 
 <script setup>
-
+//api
 const API = "https://api.github.com/users/";
-
+//import
 import { ref, computed } from 'vue';
+// definicion de variables
 let busqueda = ref('').value
 let result = ref(false)
 let mostrarError = ref(false)
 let favoritos = ref(new Map())
 
-
+// llamada a la api
 async function goSearch() {
     try {
         const response = await fetch(API + busqueda)
@@ -75,39 +76,58 @@ async function goSearch() {
 }
 
 
-
-
 // funcion verificadora:
 function verificadora(ingresoID) {
     return favoritos.value.has(ingresoID)
 }
+
+
 //boton toggle  
 let manejadoraBoton = () => {
     let usuarioID = result.value.id // pedimos el id al usuario ingresado.
     //verificamos si ese id se encuentra ya en la lista de favoritos
     if (verificadora(usuarioID)) {
-        // si esta.. 
+        // si esta.. le damos la funcion de borrar de la lista de favoritos al boton
         favoritos.value.delete(usuarioID)
+        llamadaLocalStorage()
     } else {
-        // pero sino esta, lo invitamos
+        // pero sino esta, lo invitamos, con la fucion de set "agregar"
         favoritos.value.set(usuarioID, result.value)
-        console.log(favoritos.value)
+        console.log(favoritos)
+        llamadaLocalStorage()
+
     }
-
-
 }
 
 
 // unidad computada
+// validacion para el renderizado de favoritos
 let isUsuarioFavoritos = computed(() => {
     return favoritos.value.has(result.value.id)
 })
+// creacion del array en base al map favoritos para la validacion en bucle de isUsuarioFavoritos
+let todosLosFavoritos = computed(() => {
+    return Array.from(favoritos.value.values())
+});
 
-let todosLosFavoritos = computed(()=>{
-    return Array.from (favoritos.value.values())
-})
 
+// LOCALSTORAGE//
+// llamada al localStorage
+function llamadaLocalStorage() {
+    window.localStorage.setItem('favoritos', JSON.stringify(todosLosFavoritos.value))// el nombre o la key que vamos a recuperar los valores
+}
+// guardo los datos del localStorage
+let localStorageFavoritos = JSON.parse(window.localStorage.getItem('favoritos'))
+console.log(localStorageFavoritos) // retorna un array con objetos (el favorito)
+//valido que existan elementos en el localStorgeFavoritos, copia  de la estructura de Map Favoritos e insercion de los datos del LocalStorage.
 
+if (localStorageFavoritos && localStorageFavoritos.length) {
+    const favoritosLS = favoritos.value
+    localStorageFavoritos.map (favorito =>
+        favoritosLS.set(favorito.id, favorito)
+    )
+    favoritos.value = favoritosLS
+}
 
 
 </script>

@@ -11,6 +11,7 @@ v-if / v-else: mostra un contenido por pantalla segun una condicion.
 . b. dentro de la funcion de la busqueda de la api, vamos a modificar una variable llamada result: true, esto quiere decir que cuando se haga efectivamente la peticion a la api, el valor de result cambiara a true y se mostrara el div en la interfaz. 
 . c. recordar que como usamos el ref para que sea reactivo esto, devuelve un objeto, para que cambie su valor hay que entrar en: result.value = true
 
+* LUEGO ESTA CAMBIARA A result = data, porque vamos a extraer lo que se muestre en pantalla de alli.
 
 2. AHORA TENEMOS QUE HACER CONDICIONAL LA MUESTRA DEL DIV ERROR:
 
