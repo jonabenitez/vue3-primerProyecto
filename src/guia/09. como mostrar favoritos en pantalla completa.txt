@@ -1,0 +1,24 @@
+para esto es muy sensillo gracias a vue.
+
+primero tenemos que notar que :
+
+result = guarda todos los datos del resultado de la busqueda.
+cuando buscamos un dato = result toma el valor de ese resultado, su id, sus seguidores, imagenes, todo
+
+
+entonces, lo que queremos hacer es que cuando hagamos click en la imagen de favoritos, ese resultado tome el valor del favorito actual.
+
+
+por lo tanto:
+1.
+.creamos la funcion que asigne ese valor a result
+. para esto va a ingresar le asignamos que va a ingresar un favorito como parametro, que despues lo definimos en el paso 2 gracias a la intelgencia de vue3.
+
+function mostrarFavorito (favorito) {
+    result.value = favorito
+}
+
+2. creamos la escucha a la imagen y le pasamos el favorito como parametro.
+vue es muy inteligente y guarda esos resultados que son dinamicos para poder utilizarlos, tood lo q usamos de esta forma dinamica en el body se puede utlizar.
+este favorito lo toma desde el <div v-for="favorito in todosLosFavoritos">
+<img @click.prevent="mostrarFavorito(favorito)" --> aca le asignamos el favorito que va a entrar como parametro en la funcion, sacado del for de arriba

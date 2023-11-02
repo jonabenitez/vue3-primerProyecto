@@ -37,7 +37,7 @@
     <div class="favoritos">
         <div v-for="favorito in todosLosFavoritos">
             <div class=" imgContainerFav">
-                <img class="imagen" v-bind:src="favorito.avatar_url" alt="">
+                <img  @click.prevent="mostrarFavorito(favorito)" class="imagen" v-bind:src="favorito.avatar_url" alt="">
             </div>
         </div>
     </div>
@@ -127,6 +127,13 @@ if (localStorageFavoritos && localStorageFavoritos.length) {
         favoritosLS.set(favorito.id, favorito)
     )
     favoritos.value = favoritosLS
+}
+
+
+// mostrar favoritos
+function mostrarFavorito(favorito) {
+    result.value = favorito
+    console.log(result)
 }
 
 
